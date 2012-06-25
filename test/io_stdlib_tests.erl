@@ -2,11 +2,37 @@
 -include_lib("eunit/include/eunit.hrl").
 -export([]).
 
-io_fmt_test() ->
-	io:format("hello world~n", []).
+-ifndef(FN).
+-define(FN, '/tmp/output.txt').
+-endif.
 
-io_fmt_w_test() ->
-	io:format("this outputs one Erlang term: ~w~n", [hello]).
+io_write_test() ->
+	case file:open(?FN, [write]) of
+		{ok,S} ->
+			io:format(S, "~s~n", ["Hello readers"]),
+			file:close(S);
+		{error, Reason} ->
+            ?debugFmt("open error  reason:~s~n", [Reason]),
+            ng
+    end,
+	?debugMsg("io write done~n").
 
-io_fmt_ww_test() ->
-	io:format("this outputs two Erlang terms: ~w ~w~n", [hello, world]).
+io_read_test() ->
+	case file:open(?FN, [read]) of
+        {ok, S} ->
+            read_text(S),
+            file:close(S);
+        {error, Reason} ->
+            ?debugFmt("open error  reason:~s~n", [Reason]),
+            ng
+    end,
+	?debugMsg("io read done~n").
+
+read_text(IoDevice) ->
+    case file:read_line(IoDevice) of
+        {ok, Line} -> 
+            ?debugFmt("read: ~s", [Line]),
+        	io:format("~s", [Line]), read_text(IoDevice);
+        eof -> 
+        	ok
+    end.
