@@ -1,5 +1,5 @@
 -module(tut1).
--export([double/1, mult/2, convert/2, convert_length/1]).
+-export([double/1, mult/2, convert/2, convert_length/1, list_length/1]).
 
 % Modules and Functions
 
@@ -24,3 +24,8 @@ convert_length({inch, Y}) ->
     {centimeter, Y * 2.54}.
 
 % Lists
+
+list_length([]) ->
+    0;    
+list_length([First | Rest]) ->
+    1 + list_length(Rest).
