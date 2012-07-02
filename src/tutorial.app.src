@@ -3,10 +3,9 @@
     {description, "erlang tutorial"},
     {vsn, "0.1"},
     {modules, [
-        tut1,
-        tut2,
-        tut3,
-        tut4
+        mess_client,
+        mess_server,
+        user_interface
     ]},
     {registered, []},
     {applications, [

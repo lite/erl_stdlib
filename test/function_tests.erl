@@ -13,3 +13,14 @@ bif_test() ->
 		[atom_to_list(hello),
 		list_to_atom("goodbye"),
 		integer_to_list(22)]).
+
+hof_test()->
+	Double = fun(X)->X*2 end,
+	?debugFmt("Double func: ~w", [Double(5)] ),
+	?debugFmt("lists map: ~w", [lists:map(Double, [1,2,3])]),
+	Print_City = fun({City, {X, Temp}}) -> ?debugFmt("~-15w ~w ~w~n", [City, X, Temp]) end,
+	Cities = [{moscow, {c, 10}}, {paris, {f, -28}}],
+	lists:foreach(Print_City, Cities),
+	Compare = fun({_, {_, Temp1}}, {_, {_, Temp2}}) -> Temp1 < Temp2 end,
+	lists:foreach(Print_City, lists:sort(Compare, Cities)).
+	

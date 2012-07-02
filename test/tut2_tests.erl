@@ -2,8 +2,6 @@
 -include_lib("eunit/include/eunit.hrl").
 -export([]).
 
-%% Description: description of test_fac
-
 fac_test() ->
 	?assertEqual(24, tut2:fac(4)).
 
