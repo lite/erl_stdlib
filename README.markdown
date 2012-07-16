@@ -4,6 +4,7 @@ Get start
 
 	rebar compile
 	rebar eunit
+	rebar eunit suite=stdlib_array_test
 
 # Thanks:
  
