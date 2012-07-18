@@ -2,37 +2,18 @@
 -include_lib("eunit/include/eunit.hrl").
 -export([]).
 
--ifndef(FN).
--define(FN, '/tmp/output.txt').
--endif.
+io_format_test() ->
+	io:format("hello hello\n").
 
-io_write_test() ->
-	case file:open(?FN, [write]) of
-		{ok,S} ->
-			io:format(S, "~s~n", ["Hello readers"]),
-			file:close(S);
-		{error, Reason} ->
-            ?debugFmt("open error  reason:~s~n", [Reason]),
-            ng
-    end,
-	?debugMsg("io write done~n").
+io_format_p_test() ->
+	io:format("~p", [1024]).
 
-io_read_test() ->
-	case file:open(?FN, [read]) of
-        {ok, S} ->
-            read_text(S),
-            file:close(S);
-        {error, Reason} ->
-            ?debugFmt("open error  reason:~s~n", [Reason]),
-            ng
-    end,
-	?debugMsg("io read done~n").
+io_format_w_test() ->
+	io:format("~w", [1024]).
 
-read_text(IoDevice) ->
-    case file:read_line(IoDevice) of
-        {ok, Line} -> 
-            ?debugFmt("read: ~s", [Line]),
-        	io:format("~s", [Line]), read_text(IoDevice);
-        eof -> 
-        	ok
-    end.
+io_format_s_test() ->
+	io:format("~s~n",[<<"åäö"/utf8>>]).
+
+io_format_ts_test() ->
+	io:format("~ts~n",[<<"åäö"/utf8>>]).
+	

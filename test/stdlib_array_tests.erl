@@ -14,6 +14,6 @@ array_sparse_test() ->
   	?assertEqual([{4, false}, {17, true}], array:sparse_to_orddict(A2)).
  
 array_fix_test() ->
-	A3 = array:fix(array:new(10)),
+	A3 = array:fix(array:new([{size,10},{fixed,false},{default,-1}])),
   	{'EXIT',{badarg,_}} = (catch array:set(18, true, A3)),
 	?debugMsg("array_fix_test done.").
